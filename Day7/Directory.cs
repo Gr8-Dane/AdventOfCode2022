@@ -16,12 +16,14 @@ namespace Day7
             _size = 0;
 		}
 
-		public void AddDirectory(string directory)
+		public bool AddDirectory(string directory)
 		{
 			if(_directoryNotAlreadyInDirectory(directory))
 			{
 				Directories.Add(new Directory(directory));
+				return true;
 			}
+			return false;
 		}
 
         private bool _directoryNotAlreadyInDirectory(string name)

@@ -3,6 +3,8 @@ namespace Day7
 {
 	public class TerminalCommandProcessor
 	{
+		private int _numDirs = 0;
+
 		DirectoryNavigator directoryNavigator;
 		private TerminalInputOutput terminalLines;
 
@@ -11,7 +13,7 @@ namespace Day7
 			directoryNavigator = new DirectoryNavigator();
 		}
 
-		public Dictionary<string, int> GetDirectorySizes()
+		public  List<int> GetDirectorySizes()
 		{
 			return directoryNavigator.GetDirectorySizes();
 		}
@@ -22,13 +24,13 @@ namespace Day7
 
             while (terminalLines.NextLine())
 			{
-				var inputOutputElements = terminalLines.CurrentLine.Split(' ');
-
-				if (inputOutputElements[0] == "$")
+				if (terminalLines.CurrentLine.Contains("$"))
 				{
-					_executeCommand(inputOutputElements);
+					_executeCommand(terminalLines.CurrentLine.Split(' '));
 				}
             }
+			Console.WriteLine("Number of Directories Encounter = " + _numDirs);
+			Console.WriteLine("Number of Directories Actually Added = " + directoryNavigator.NumDirs);
 		}
 
 		private void _executeCommand(string[] command)
@@ -64,6 +66,7 @@ namespace Day7
 				if (pieces[0] == "dir")
 				{
 					directoryNavigator.AddDirectory(pieces[1]);
+					_numDirs++;
 				}
 				else
 				{

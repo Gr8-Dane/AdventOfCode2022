@@ -13,6 +13,7 @@ namespace Day7
 
     public class DirectoryNavigator
 	{
+		public int NumDirs = 0;
 		public List<Directory> PreviousDirectory { get; private set; }
 		public Directory CurrentDirectory { get; private set; }
 		public List<Directory> KnownDirectories { get; private set; }
@@ -23,21 +24,21 @@ namespace Day7
             KnownDirectories = new List<Directory>();
         }
 
-		public Dictionary<string, int> GetDirectorySizes()
+		public List<int> GetDirectorySizes()
 		{
-			Dictionary<string, int> DirectorySizes = new Dictionary<string, int>();
+			List<int> DirectorySizes = new List<int>();
 			foreach(var directory in KnownDirectories)
 			{
-				DirectorySizes.Add(directory.Name, directory.GetSize());
+				DirectorySizes.Add(directory.GetSize());
 			}
 			return DirectorySizes;
 		}
 
 		public void AddDirectory(string directory)
 		{
-			CurrentDirectory.AddDirectory(directory);
-			if(_unknownDirectory(directory))
+			if(CurrentDirectory.AddDirectory(directory))
 			{
+				NumDirs++;
 				KnownDirectories.Add(CurrentDirectory.Directories.FirstOrDefault(p => p.Name == directory));
 			}
 		}

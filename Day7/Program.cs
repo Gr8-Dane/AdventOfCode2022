@@ -12,11 +12,11 @@ public class Program
         var sizes = processor.GetDirectorySizes();
 
         int totalSize = 0;
-        foreach(KeyValuePair<string, int> pair in sizes)
+        foreach(var size in sizes)
         {
-            if(pair.Value < 100000)
+            if(size <= 100000)
             {
-                totalSize += pair.Value;
+                totalSize += size;
             }
         }
 
